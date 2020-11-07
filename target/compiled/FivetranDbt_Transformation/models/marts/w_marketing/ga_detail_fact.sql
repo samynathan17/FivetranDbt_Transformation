@@ -1,0 +1,1 @@
+select * from FIVETRAN_DATABASE.dbt_dataflo_staging.inter_detail_ga

@@ -60,8 +60,14 @@
         created_date as created_at,
         last_modified_date as updated_at,
         IS_DELETED,
-        month(created_date) as created_month,
-        month(close_date) as closed_month,
+        DATEADD(DD,-7,GETDATE()) AS lastweek,
+        DATEADD(DD,0,GETDATE()) AS thisweek,
+        DATEADD(MM,-1,GETDATE()) AS lastmonth,
+        DATEADD(MM,0,GETDATE()) AS thismonth,
+        extract(quarter from date_trunc('quarter', GETDATE())::date - 1) AS lastquarter,
+        CURRENT_DATE() AS thisquarter,
+        DATEADD(year,-1,GETDATE()) AS lastyear,
+        DATEADD(year,0,GETDATE()) AS thisyear,
         created_date >= {{ dbt_utils.date_trunc('month', dbt_utils.current_timestamp()) }} as is_created_this_month,
         created_date >= {{ dbt_utils.date_trunc('quarter', dbt_utils.current_timestamp()) }} as is_created_this_quarter,
         {{ dbt_utils.datediff(dbt_utils.current_timestamp(), 'created_date', 'day') }} as days_since_created,
@@ -74,4 +80,4 @@
 )
 {% endif %}
 
-select * from renamed 
+select * from renamed

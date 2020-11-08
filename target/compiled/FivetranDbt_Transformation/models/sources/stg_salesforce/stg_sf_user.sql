@@ -19,14 +19,18 @@
           user_type,
           employee_number,
           TIME_ZONE_SID_KEY,
-          case
-          when TIME_ZONE_SID_KEY='America/Los_Angeles' then '$' 
-          when TIME_ZONE_SID_KEY='India' then 'INR' else null end as rupeesympol,
           CREATED_DATE,
           CREATED_BY_ID,
           LAST_MODIFIED_DATE,
           LAST_MODIFIED_BY_ID,
-          _FIVETRAN_DELETED as IS_DELETED
+            DATEADD(DD,-7,GETDATE()) AS lastweek,
+            DATEADD(DD,0,GETDATE()) AS thisweek,
+            DATEADD(MM,-1,GETDATE()) AS lastmonth,
+            DATEADD(MM,0,GETDATE()) AS thismonth,
+            extract(quarter from date_trunc('quarter', GETDATE())::date - 1) AS lastquarter,
+            CURRENT_DATE() AS thisquarter,
+            DATEADD(year,-1,GETDATE()) AS lastyear,
+            DATEADD(year,0,GETDATE()) AS thisyear
         from source 
         )
 

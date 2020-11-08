@@ -34,6 +34,10 @@
         email,
         phone as work_phone,
         mobile_phone,
+        street,
+        city,
+        state,
+        postal_code,
         COUNTRY,
        
         -- outreach
@@ -50,13 +54,18 @@
         created_date as created_at,
         last_modified_date as updated_at,
         IS_DELETED,
-        DATEADD(DD,-7,GETDATE()) AS WEEKAGO,
-        DATEADD(MM,-1,GETDATE()) AS MONTHAGO,
-
         clean_status,
         individual_id,
         product_interest_c as product_interest,
-        current_generators_c as current_generators
+        current_generators_c as current_generators,
+        DATEADD(DD,-7,GETDATE()) AS lastweek,
+        DATEADD(DD,0,GETDATE()) AS thisweek,
+        DATEADD(MM,-1,GETDATE()) AS lastmonth,
+        DATEADD(MM,0,GETDATE()) AS thismonth,
+        extract(quarter from date_trunc('quarter', GETDATE())::date - 1) AS lastquarter,
+        CURRENT_DATE() AS thisquarter,
+        DATEADD(year,-1,GETDATE()) AS lastyear,
+        DATEADD(year,0,GETDATE()) AS thisyear
 
     from source  
     )

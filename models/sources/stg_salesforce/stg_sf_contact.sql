@@ -28,7 +28,15 @@
         level_c,
         languages_c ,
         CREATED_DATE,
-        IS_DELETED
+        IS_DELETED,
+        DATEADD(DD,-7,GETDATE()) AS lastweek,
+        DATEADD(DD,0,GETDATE()) AS thisweek,
+        DATEADD(MM,-1,GETDATE()) AS lastmonth,
+        DATEADD(MM,0,GETDATE()) AS thismonth,
+        extract(quarter from date_trunc('quarter', GETDATE())::date - 1) AS lastquarter,
+        CURRENT_DATE() AS thisquarter,
+        DATEADD(year,-1,GETDATE()) AS lastyear,
+        DATEADD(year,0,GETDATE()) AS thisyear
      from source
     )
 {% endif %}

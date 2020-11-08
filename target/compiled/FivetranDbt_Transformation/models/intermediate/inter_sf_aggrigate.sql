@@ -27,7 +27,6 @@ WITH opportunity AS (
         when not opportunity.is_closed and lower(opportunity.forecast_category) in ('pipeline','forecast','bestcase') then 'Pipeline'
         else 'Other'
       end as status,
-      month(close_date) as closed_month,
       case when is_created_this_month then amount else 0 end as created_amount_this_month,
       case when is_created_this_quarter then amount else 0 end as created_amount_this_quarter,
       case when is_created_this_month then 1 else 0 end as created_count_this_month,
@@ -48,6 +47,8 @@ WITH opportunity AS (
   select 
     opportunity_manager_id as won_manager_id,
     opportunity_owner_id as won_owner_id,
+    round(sum(created_amount_this_month)) as created_amount_this_month,
+    round(sum(created_amount_this_month)) as created_amount_this_quarter,
     round(sum(closed_amount_this_month)) as won_amount_closed_this_month,
     round(sum(closed_amount_this_quarter)) as won_amount_closed_this_quarter,
     count(*) as total_number_won,

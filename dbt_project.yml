@@ -75,7 +75,7 @@ vars:
   stg_salesforce_user_table       : user
   stg_salesforce_user_role_table  : user_role
   stg_salesforce_contact_table    : contact
-  
+  stg_salesforce_case_table       : case
 
   
 
